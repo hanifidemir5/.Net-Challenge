@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "1mtmhNdsQmkioxqOYx34bFRvVPESB24kwlFPMsSV0co=",
+  "Source": "KargoApp",
+  "BasePath": "_content/KargoApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
