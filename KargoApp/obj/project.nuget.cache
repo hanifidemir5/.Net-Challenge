@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0mn52WE8ulB7a+I9z07v+1YC7MXxF7nKUm7qhPzDiG1+WZvUGkJ4lEbCP2MOXG3kvdIjh3rP+8XxrR9YRWSK/w==",
+  "dgSpecHash": "lYLczn5TU7Kegu9eh/5AM1I/IFTu7APf4xlI/xIZCp2Efeh/EZlVM7e6pmoiJgB8aSt3dlQfOKaaK0/akZt7bg==",
   "success": true,
   "projectFilePath": "C:\\Users\\teyme\\OneDrive\\Masaüstü\\.Net Challenge\\KargoApp\\KargoApp\\KargoApp.csproj",
   "expectedPackageFiles": [
@@ -17,6 +17,7 @@
     "C:\\Users\\teyme\\.nuget\\packages\\microsoft.entityframeworkcore.design\\7.0.13\\microsoft.entityframeworkcore.design.7.0.13.nupkg.sha512",
     "C:\\Users\\teyme\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\7.0.13\\microsoft.entityframeworkcore.relational.7.0.13.nupkg.sha512",
     "C:\\Users\\teyme\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\7.0.13\\microsoft.entityframeworkcore.sqlserver.7.0.13.nupkg.sha512",
+    "C:\\Users\\teyme\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\7.0.13\\microsoft.entityframeworkcore.tools.7.0.13.nupkg.sha512",
     "C:\\Users\\teyme\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\teyme\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\teyme\\.nuget\\packages\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
