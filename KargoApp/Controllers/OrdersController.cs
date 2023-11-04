@@ -238,6 +238,7 @@ namespace KargoApp.Controllers
 
             return Ok( orderId + " numaralı sipariş başarı ile oluşturuldu.");
         }
+
         [HttpPut("{orderId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -245,9 +246,6 @@ namespace KargoApp.Controllers
         public IActionResult UpdateOrder(int orderId, [FromBody]UpdateOrderDTO updatedOrder) 
         {
             if (updatedOrder == null)
-                return BadRequest(ModelState);
-
-            if(orderId != updatedOrder.OrderId)
                 return BadRequest(ModelState);
 
             var order = _orderRepository.GetOrdersById(orderId);
@@ -258,15 +256,31 @@ namespace KargoApp.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var orderMap = _mapper.Map<Orders>(updatedOrder);
+            order.OrderDesi = updatedOrder.OrderDesi;
+            order.OrderTime = updatedOrder.OrderTime;
 
-            orderMap.OrderDesi = updatedOrder.OrderDesi;
-            if (!_orderRepository.UpdateOrder(orderMap))
+            var carrierConfiguratins = _carrierConfigurationsRepository.GetCarrierConfigurationsWithCarrier();
+
+            var properCarrierConfigurationList = carrierConfiguratins.Where(p => p.CarrierMinDesi <= order.OrderDesi && p.CarrierMaxDesi >= order.OrderDesi).MinBy(x => x.CarrierCost);
+
+            if (properCarrierConfigurationList == null)
             {
-                ModelState.AddModelError("", "Bir şeyler ters gitti!!");
-                return StatusCode(500, ModelState);
+                var closestDesiValue = carrierConfiguratins.Where(p => p.CarrierMaxDesi <= order.OrderDesi).OrderBy(x => x.CarrierMaxDesi).LastOrDefault();
+                var difference = Math.Abs(order.OrderDesi - closestDesiValue.CarrierMaxDesi);
+                var finalCost = (closestDesiValue.Carrier.CarrierPlusDesiCost * difference) + closestDesiValue.CarrierCost;
+                order.OrderCarrierCost = finalCost;
+                order.CarrierId = closestDesiValue.CarrierId;
             }
-            return Ok("{orderId} numaralı sipariş başarı ile güncellendi!!");
+            else
+            {
+                order.CarrierId = properCarrierConfigurationList.CarrierId;
+                order.OrderCarrierCost = properCarrierConfigurationList.CarrierCost;
+            }
+
+            _orderRepository.UpdateOrder(order);
+
+            return Ok(orderId + " numaralı sipariş başarı ile güncellendi!!");
+
         }
 
         [HttpDelete("{orderId}")]
