@@ -4,8 +4,8 @@ namespace KargoApp.Models
 {
     public class Orders
     {
-        [Required]
         public int OrderId { get; set; }
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public int CarrierId { get; set; }
         [Required]
         public int OrderDesi { get; set;}

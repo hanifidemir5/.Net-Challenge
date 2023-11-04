@@ -1,6 +1,7 @@
 ﻿using KargoApp.Data;
 using KargoApp.Interface;
 using KargoApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace KargoApp.Repository
 {
@@ -14,7 +15,7 @@ namespace KargoApp.Repository
         
         public ICollection<Orders> GetOrders()
         {
-            return _context.Orders.OrderBy(p => p.OrderId).ToList();
+            return _context.Orders.ToList();
         }
         public Orders GetOrdersById(int orderId)
         {
@@ -40,7 +41,29 @@ namespace KargoApp.Repository
         {
             return _context.Orders.Any(p => p.OrderId == orderId);
         }
+        public Orders GetOrder(int orderId) 
+        {
+            return _context.Orders.Where(o => o.OrderId == orderId).FirstOrDefault();
+        }
+        public bool CreateOrder(Orders order)
+        {
+            _context.Add(order);
+            return Save();
+        }
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true:false;
+        }
 
-        
+        public bool UpdateOrders(Orders orders)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteOrders(int orderId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

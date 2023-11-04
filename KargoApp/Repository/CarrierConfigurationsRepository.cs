@@ -15,5 +15,15 @@ namespace KargoApp.Repository
         {
             return _context.CarrierConfigurations.OrderBy(p=>p.CarrierConfigurationId).ToList();
         }
+        public bool CreateCarrierConfiguration(CarrierConfigurations carrierConfiguration)
+        {
+            var saved = _context.Add(carrierConfiguration);
+            return Save();
+        }
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
+        }
     }
 }

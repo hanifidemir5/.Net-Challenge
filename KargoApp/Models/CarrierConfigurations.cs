@@ -6,7 +6,7 @@ namespace KargoApp.Models
     {
         [Required]
         public int CarrierConfigurationId { get; set; }
-        [Required]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public int CarrierId { get; set; }
         [Required]
         public int CarrierMaxDesi { get; set;}

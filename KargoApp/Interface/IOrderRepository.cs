@@ -10,5 +10,10 @@ namespace KargoApp.Interface
         Orders GetOrdersByOrderTime(DateTime orderTime);
         Orders GetOrdersByCarrierCost(decimal  orderCarrierCost);
         bool OrderExist(int orderId);
+        bool CreateOrder(Orders orders);
+        bool Save();
+        bool UpdateOrders(Orders orders);
+        bool DeleteOrders(int orderId);
+
     }
 }

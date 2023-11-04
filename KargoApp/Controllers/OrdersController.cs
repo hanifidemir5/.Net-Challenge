@@ -1,4 +1,5 @@
-﻿using KargoApp.Dto;
+﻿using AutoMapper;
+using KargoApp.Dto;
 using KargoApp.Interface;
 using KargoApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,8 @@ namespace KargoApp.Controllers
     public class OrdersController : Controller
     {
         private readonly IOrderRepository _orderRepository;
-        public OrdersController(IOrderRepository orderRepository)
+        private readonly IMapper _mapper;
+        public OrdersController(IOrderRepository orderRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
         }
@@ -172,7 +174,44 @@ namespace KargoApp.Controllers
             return Ok(response);
         }
 
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public IActionResult CreateOrder([FromBody] OrderCreateDto orderCreate)
+        {
+            if (orderCreate == null)
+                return BadRequest(ModelState);
 
+            var order = _orderRepository.GetOrders()
+                .Where(c => c.OrderId == orderCreate.OrderId).FirstOrDefault();
+            
+            if(order != null)
+            {
+                ModelState.AddModelError("", "Sipariş hali hazırda var!!");
+                return StatusCode(422, ModelState);
+            }
+
+            /*
+
+            if (!_orderRepository.CreateOrder(orderMap))
+            {
+                ModelState.AddModelError("", "Kayıt oluştururken birşeyler ters gitti.");
+                return StatusCode(500, ModelState);
+            }
+            */
+            var orderInstance = new Orders
+            {
+                OrderDesi = orderCreate.OrderDesi,
+                OrderCarrierCost = orderCreate.OrderCarrierCost,
+                OrderTime = orderCreate.OrderTime
+            };
+
+            _orderRepository.CreateOrder(orderInstance);
+
+            var orderId = orderInstance.OrderId;
+
+            return Ok( orderId + " numaralı sipariş başarı ile oluşturuldu.");
+        }
 
     }
 
