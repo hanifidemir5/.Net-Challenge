@@ -60,9 +60,6 @@ namespace KargoApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarrierId"));
 
-                    b.Property<int>("CarrierConfigurationId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("CarrierIsActive")
                         .HasColumnType("bit");
 

@@ -24,10 +24,18 @@ namespace KargoApp.Data
             modelBuilder.Entity<Carriers>(p =>
             {
                 p.HasKey("CarrierId");
+                p.HasMany(m => m.CarrierConfigurations).WithOne(o => o.Carrier);
+                p.HasMany(m => m.Orders).WithOne(o => o.Carrier);
+               
+
+
             });
+           
             modelBuilder.Entity<CarrierConfigurations>(p =>
             {
                 p.HasKey("CarrierConfigurationId");
+
+
             });
         }
     }

@@ -1,6 +1,7 @@
 ﻿using KargoApp.Data;
 using KargoApp.Interface;
 using KargoApp.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace KargoApp.Repository
@@ -15,7 +16,10 @@ namespace KargoApp.Repository
         }
         public ICollection<Carriers> GetCarriers() 
         {
-            return _context.Carriers.OrderBy(p => p.CarrierId).ToList();
+            var carriers = _context.Carriers.Include(p => p.CarrierConfigurations).ToList();
+          
+            return (ICollection<Carriers>)carriers;
+
         }
         public bool CreateCarrier(Carriers carrier)
         {
@@ -28,14 +32,21 @@ namespace KargoApp.Repository
             return saved > 0 ? true : false;
         }
 
-        public bool UpdateCarrier(Carriers carriers)
+        public bool UpdateCarrier(Carriers carrier)
         {
-            throw new NotImplementedException();
+            _context.Update(carrier);
+            return Save();
         }
 
-        public bool DeleteCarrier(Carriers carriers)
+        public bool DeleteCarrier(Carriers carrier)
         {
-            throw new NotImplementedException();
+            _context.Remove(carrier);
+            return Save();
         }
+        public bool CarrierExist(int carrierId)
+        {
+            return _context.Orders.Any(p => p.CarrierId == carrierId);
+        }
+        
     }
 }

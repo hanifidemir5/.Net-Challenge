@@ -3,15 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KargoApp.Dto
 {
-    public class OrderCreateDto
+    public class CreateOrderDTO
     {
-        [HiddenInput]
-        public int OrderId { get; set; }
         [Required]
         public int OrderDesi { get; set; }
         [Required]
         public DateTime OrderTime { get; set; }
-        [Required]
-        public decimal OrderCarrierCost { get; set; }
     }
 }

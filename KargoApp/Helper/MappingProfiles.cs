@@ -8,7 +8,13 @@ namespace KargoApp.Helper
     {
         public MappingProfiles()
         {
-               CreateMap<Orders, SingleOrderDTO>();
+               CreateMap<Orders, UpdateOrderDTO>().ReverseMap();
+               CreateMap<Carriers,CreateCarrierDTO>().ReverseMap();   
+               CreateMap<Carriers,CarriersDTO>().ReverseMap();
+               CreateMap<CarrierConfigurations,UpdateCarrierConfigurationDTO>().ReverseMap();
+               CreateMap<OrdersDTO, Orders>().ReverseMap();
+               CreateMap<CarrierConfigurationsDTO, CarrierConfigurations>().ReverseMap();
+
         }
     }
 }

@@ -15,10 +15,8 @@ namespace KargoApp.Models
         public int CarrierPlusDesiCost { get; set; }
 
         [DisplayFormat(ConvertEmptyStringToNull = false)]
-        public int CarrierConfigurationId { get; set; }
+        public ICollection<Orders> Orders { get; set; } 
         [DisplayFormat(ConvertEmptyStringToNull = false)]
-        public ICollection<Orders> Orders { get; set; }
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        public ICollection<CarrierConfigurations> CarrierConfigurations { get; set; }
+        public ICollection<CarrierConfigurations> CarrierConfigurations { get; set; } 
     }
 }

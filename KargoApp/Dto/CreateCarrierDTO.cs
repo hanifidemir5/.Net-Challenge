@@ -3,15 +3,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KargoApp.Dto
 {
-    public class CarrierCreateDTO
+    public class CreateCarrierDTO
     {
-        [HiddenInput]
-        public int CarrierId { get; set; }
         [Required]
         public string CarrierName { get; set; }
         [Required]
         public Boolean CarrierIsActive { get; set; }
         [Required]
         public int CarrierPlusDesiCost { get; set; }
+        [Required]
+        public int CarrierConfigurationId { get; set; }
     }
 }

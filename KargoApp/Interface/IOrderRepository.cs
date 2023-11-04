@@ -1,4 +1,5 @@
-﻿using KargoApp.Models;
+﻿
+using KargoApp.Models;
 
 namespace KargoApp.Interface
 {
@@ -10,10 +11,12 @@ namespace KargoApp.Interface
         Orders GetOrdersByOrderTime(DateTime orderTime);
         Orders GetOrdersByCarrierCost(decimal  orderCarrierCost);
         bool OrderExist(int orderId);
-        bool CreateOrder(Orders orders);
+        bool CreateOrder(Orders order);
+        bool UpdateOrder(Orders order);
+        bool DeleteOrder(Orders order);
         bool Save();
-        bool UpdateOrders(Orders orders);
-        bool DeleteOrders(int orderId);
+        ICollection<Orders> GetOrdersWithCarriers();
+
 
     }
 }

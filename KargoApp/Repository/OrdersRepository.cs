@@ -17,6 +17,10 @@ namespace KargoApp.Repository
         {
             return _context.Orders.ToList();
         }
+        public ICollection<Orders> GetOrdersWithCarriers()
+        {
+            return _context.Orders.Include(p => p.Carrier).ToList();
+        }
         public Orders GetOrdersById(int orderId)
         {
             return _context.Orders.Where(p => p.OrderId == orderId).FirstOrDefault();
@@ -50,20 +54,21 @@ namespace KargoApp.Repository
             _context.Add(order);
             return Save();
         }
+        public bool UpdateOrder(Orders order)
+        {
+            _context.Update(order);
+            return Save();
+        }
         public bool Save()
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true:false;
         }
 
-        public bool UpdateOrders(Orders orders)
+        public bool DeleteOrder(Orders order)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteOrders(int orderId)
-        {
-            throw new NotImplementedException();
+            _context.Remove(order);
+            return Save();
         }
     }
 }

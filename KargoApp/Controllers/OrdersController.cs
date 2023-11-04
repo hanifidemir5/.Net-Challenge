@@ -14,9 +14,14 @@ namespace KargoApp.Controllers
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
-        public OrdersController(IOrderRepository orderRepository, IMapper mapper)
+        private readonly ICarriersRepository _carriersRepository;
+        private readonly ICarrierConfigurationsRepository _carrierConfigurationsRepository;
+        public OrdersController(IOrderRepository orderRepository, IMapper mapper,ICarriersRepository carriersRepository,ICarrierConfigurationsRepository carrierConfigurationsRepository)
         {
             _orderRepository = orderRepository;
+            _mapper = mapper;
+            _carriersRepository = carriersRepository;
+            _carrierConfigurationsRepository = carrierConfigurationsRepository;
         }
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Orders>))]
@@ -177,19 +182,22 @@ namespace KargoApp.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateOrder([FromBody] OrderCreateDto orderCreate)
+        public IActionResult CreateOrder([FromBody] CreateOrderDTO orderCreate)
         {
             if (orderCreate == null)
                 return BadRequest(ModelState);
 
+            /*
+             
             var order = _orderRepository.GetOrders()
-                .Where(c => c.OrderId == orderCreate.OrderId).FirstOrDefault();
+                .Where(c => c.OrderTime == orderCreate.OrderTime).FirstOrDefault();
             
             if(order != null)
             {
                 ModelState.AddModelError("", "Sipariş hali hazırda var!!");
                 return StatusCode(422, ModelState);
             }
+             */
 
             /*
 
@@ -202,17 +210,87 @@ namespace KargoApp.Controllers
             var orderInstance = new Orders
             {
                 OrderDesi = orderCreate.OrderDesi,
-                OrderCarrierCost = orderCreate.OrderCarrierCost,
                 OrderTime = orderCreate.OrderTime
             };
+
+            var carrierConfiguratins = _carrierConfigurationsRepository.GetCarrierConfigurationsWithCarrier();
+
+            var properCarrierConfigurationList = carrierConfiguratins.Where(p => p.CarrierMinDesi <= orderInstance.OrderDesi && p.CarrierMaxDesi >= orderInstance.OrderDesi).MinBy(x => x.CarrierCost);
+            
+            if(properCarrierConfigurationList == null)
+            {
+                var closestDesiValue = carrierConfiguratins.Where(p => p.CarrierMaxDesi <= orderInstance.OrderDesi).OrderBy(x => x.CarrierMaxDesi).LastOrDefault();
+                var difference = Math.Abs(orderInstance.OrderDesi - closestDesiValue.CarrierMaxDesi);
+                var finalCost = (closestDesiValue.Carrier.CarrierPlusDesiCost * difference) + closestDesiValue.CarrierCost;
+                orderInstance.OrderCarrierCost = finalCost;
+                orderInstance.CarrierId = closestDesiValue.CarrierId;
+            }
+            else
+            {
+                orderInstance.CarrierId = properCarrierConfigurationList.CarrierId;
+                orderInstance.OrderCarrierCost = properCarrierConfigurationList.CarrierCost;
+            }
 
             _orderRepository.CreateOrder(orderInstance);
 
             var orderId = orderInstance.OrderId;
 
+
             return Ok( orderId + " numaralı sipariş başarı ile oluşturuldu.");
+        }
+        [HttpPut("{orderId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateOrder(int orderId, [FromBody]UpdateOrderDTO updatedOrder) 
+        {
+            if (updatedOrder == null)
+                return BadRequest(ModelState);
+
+            if(orderId != updatedOrder.OrderId)
+                return BadRequest(ModelState);
+
+            var order = _orderRepository.GetOrdersById(orderId);
+
+            if(order == null)
+                return NotFound("Sipariş bulunamadı!!");
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var orderMap = _mapper.Map<Orders>(updatedOrder);
+
+            orderMap.OrderDesi = updatedOrder.OrderDesi;
+            if (!_orderRepository.UpdateOrder(orderMap))
+            {
+                ModelState.AddModelError("", "Bir şeyler ters gitti!!");
+                return StatusCode(500, ModelState);
+            }
+            return Ok("{orderId} numaralı sipariş başarı ile güncellendi!!");
+        }
+
+        [HttpDelete("{orderId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteOrders(int orderId)
+        {
+            if (!_orderRepository.OrderExist(orderId)) 
+                return NotFound(ModelState);
+            var orderToDelete = _orderRepository.GetOrders().FirstOrDefault(p => p.OrderId == orderId);
+            
+            if(orderToDelete == null)
+                return BadRequest("Sipariş bulunamadı!!");
+           
+            if(!ModelState.IsValid)
+                return BadRequest();
+
+            if (!_orderRepository.DeleteOrder(orderToDelete))
+            {
+                ModelState.AddModelError("", "Silme sırasında birşeyler ters gitti.");
+            }
+            return Ok("Sipariş silme başarılı!!");
         }
 
     }
-
 }

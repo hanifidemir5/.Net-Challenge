@@ -14,6 +14,7 @@ namespace KargoApp.Models
         public int CarrierMinDesi { get;set;}
         [Required]
         public decimal CarrierCost { get; set;}
+        public Carriers Carrier { get; set; }
 
     }
 }

@@ -1,0 +1,12 @@
+C:\Users\teyme\OneDrive\Masaüstü\.Net Challenge\KargoApp\Buisness\bin\Debug\net6.0\Buisness.deps.json
+C:\Users\teyme\OneDrive\Masaüstü\.Net Challenge\KargoApp\Buisness\bin\Debug\net6.0\Buisness.dll
+C:\Users\teyme\OneDrive\Masaüstü\.Net Challenge\KargoApp\Buisness\bin\Debug\net6.0\Buisness.pdb
+C:\Users\teyme\OneDrive\Masaüstü\.Net Challenge\KargoApp\Buisness\obj\Debug\net6.0\Buisness.csproj.AssemblyReference.cache
+C:\Users\teyme\OneDrive\Masaüstü\.Net Challenge\KargoApp\Buisness\obj\Debug\net6.0\Buisness.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\teyme\OneDrive\Masaüstü\.Net Challenge\KargoApp\Buisness\obj\Debug\net6.0\Buisness.AssemblyInfoInputs.cache
+C:\Users\teyme\OneDrive\Masaüstü\.Net Challenge\KargoApp\Buisness\obj\Debug\net6.0\Buisness.AssemblyInfo.cs
+C:\Users\teyme\OneDrive\Masaüstü\.Net Challenge\KargoApp\Buisness\obj\Debug\net6.0\Buisness.csproj.CoreCompileInputs.cache
+C:\Users\teyme\OneDrive\Masaüstü\.Net Challenge\KargoApp\Buisness\obj\Debug\net6.0\Buisness.dll
+C:\Users\teyme\OneDrive\Masaüstü\.Net Challenge\KargoApp\Buisness\obj\Debug\net6.0\refint\Buisness.dll
+C:\Users\teyme\OneDrive\Masaüstü\.Net Challenge\KargoApp\Buisness\obj\Debug\net6.0\Buisness.pdb
+C:\Users\teyme\OneDrive\Masaüstü\.Net Challenge\KargoApp\Buisness\obj\Debug\net6.0\ref\Buisness.dll

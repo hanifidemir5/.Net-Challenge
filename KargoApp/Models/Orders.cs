@@ -11,7 +11,8 @@ namespace KargoApp.Models
         public int OrderDesi { get; set;}
         [Required]
         public DateTime OrderTime { get; set; }
-        [Required]
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public decimal OrderCarrierCost { get; set; }
+        public Carriers Carrier { get; set; }
     }
 }
