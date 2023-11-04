@@ -26,21 +26,6 @@ namespace KargoApp.Repository
             return _context.Orders.Where(p => p.OrderId == orderId).FirstOrDefault();
         }
 
-        public Orders GetOrdersByDesi(int orderDesi)
-        {
-            return _context.Orders.Where(p => p.OrderDesi == orderDesi).FirstOrDefault();
-        }
-
-        public Orders GetOrdersByOrderTime(DateTime orderTime)
-        {
-            return _context.Orders.Where(p => p.OrderTime == orderTime).FirstOrDefault();
-        }
-
-        public Orders GetOrdersByCarrierCost(decimal orderCarrierCost)
-        {
-            return _context.Orders.Where(p=> p.OrderCarrierCost == orderCarrierCost).FirstOrDefault();
-        }
-
         public bool OrderExist(int orderId)
         {
             return _context.Orders.Any(p => p.OrderId == orderId);

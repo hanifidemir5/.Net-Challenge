@@ -76,108 +76,6 @@ namespace KargoApp.Controllers
             };
             return Ok(response);
         }
-        [HttpGet("[action]/{orderDesi}")]
-        [ProducesResponseType(200, Type = typeof(Orders))]
-        [ProducesResponseType(400)]
-        public IActionResult GetOrdersByDesi(int orderDesi)
-        {
-            var order = _orderRepository.GetOrdersByDesi(orderDesi);
-
-            if (order == null)
-            {
-                var errorResponse = new SingleOrderErrorDTO()
-                {
-                    Message = "Sipariş Bulunamadı",
-                    StatusCode = (int)HttpStatusCode.NotFound,
-                    Succeeded = false,
-                };
-                return NotFound(errorResponse);
-            }
-
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var response = new SingleOrderDTO()
-            {
-                CarrierId = order.CarrierId,
-                Message = "Başarılı",
-                OrderId = order.OrderId,
-                OrderCarrierCost = order.OrderCarrierCost,
-                OrderDesi = order.OrderDesi,
-                OrderTime = order.OrderTime,
-                Succeeded = true,
-                StatusCode = (int)HttpStatusCode.OK,
-            };
-            return Ok(response);
-        }
-        [HttpGet("[action]/{orderTime}")]
-        [ProducesResponseType(200, Type = typeof(Orders))]
-        [ProducesResponseType(400)]
-        public IActionResult GetOrdersByOrderTime(DateTime orderTime)
-        {
-            var order = _orderRepository.GetOrdersByOrderTime(orderTime);
-
-            if (order == null)
-            {
-                var errorResponse = new SingleOrderErrorDTO()
-                {
-                    Message = "Sipariş Bulunamadı",
-                    StatusCode = (int)HttpStatusCode.NotFound,
-                    Succeeded = false,
-                };
-                return NotFound(errorResponse);
-            }
-
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var response = new SingleOrderDTO()
-            {
-                CarrierId = order.CarrierId,
-                Message = "Başarılı",
-                OrderId = order.OrderId,
-                OrderCarrierCost = order.OrderCarrierCost,
-                OrderDesi = order.OrderDesi,
-                OrderTime = order.OrderTime,
-                Succeeded = true,
-                StatusCode = (int)HttpStatusCode.OK,
-            };
-            return Ok(response);
-        }
-        [HttpGet("[action]/{orderCarrierCost}")]
-        [ProducesResponseType(200, Type = typeof(Orders))]
-        [ProducesResponseType(400)]
-        public IActionResult GetOrdersByCarrierCost(decimal orderCarrierCost)
-        {
-            var order = _orderRepository.GetOrdersByCarrierCost(orderCarrierCost);
-
-            if (order == null)
-            {
-                var errorResponse = new SingleOrderErrorDTO()
-                {
-                    Message = "Sipariş Bulunamadı",
-                    StatusCode = (int)HttpStatusCode.NotFound,
-                    Succeeded = false,
-                };
-                return NotFound(errorResponse);
-            }
-
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var response = new SingleOrderDTO()
-            {
-                CarrierId = order.CarrierId,
-                Message = "Başarılı",
-                OrderId = order.OrderId,
-                OrderCarrierCost = order.OrderCarrierCost,
-                OrderDesi = order.OrderDesi,
-                OrderTime = order.OrderTime,
-                Succeeded = true,
-                StatusCode = (int)HttpStatusCode.OK,
-            };
-            return Ok(response);
-        }
 
         [HttpPost]
         [ProducesResponseType(204)]
@@ -187,26 +85,6 @@ namespace KargoApp.Controllers
             if (orderCreate == null)
                 return BadRequest(ModelState);
 
-            /*
-             
-            var order = _orderRepository.GetOrders()
-                .Where(c => c.OrderTime == orderCreate.OrderTime).FirstOrDefault();
-            
-            if(order != null)
-            {
-                ModelState.AddModelError("", "Sipariş hali hazırda var!!");
-                return StatusCode(422, ModelState);
-            }
-             */
-
-            /*
-
-            if (!_orderRepository.CreateOrder(orderMap))
-            {
-                ModelState.AddModelError("", "Kayıt oluştururken birşeyler ters gitti.");
-                return StatusCode(500, ModelState);
-            }
-            */
             var orderInstance = new Orders
             {
                 OrderDesi = orderCreate.OrderDesi,
